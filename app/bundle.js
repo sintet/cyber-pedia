@@ -36495,7 +36495,7 @@
 /* 14 */
 /***/ function(module, exports) {
 
-	module.exports = "<ul class=\"listOfArticles\">\r\n  <li ng-repeat=\"item in listCtrl.listOfArticles\">\r\n      <a href=\"#\" ui-sref=\"article({id:item.$id})\">\r\n        <img ng-src=\"{{item.img}}\" alt=\"item\" class=\"thumb\">\r\n          {{item.name}}\r\n      </a>\r\n  </li>\r\n</ul>\r\n\r\n<button class=\"btn\" ng-click=\"isReplyFormOpen = !isReplyFormOpen\">add new article</button>\r\n<form class=\"newArticleForm\" ng-init=\"isReplyFormOpen = false\" ng-show=\"isReplyFormOpen\" id=\"replyForm\" >\r\n  <input type=\"text\" ng-model=\"listCtrl.newName\" placeholder=\"enter name\">\r\n  <textarea class=\"article-desc\" placeholder=\"enter description\" ng-model=\"listCtrl.desc\"> </textarea>\r\n\r\n  <!-- <input type=\"file\" name=\"pic\" id=\"image-upload\"> -->\r\n  <!-- <button type=\"button\" name=\"button\" ng-click=\"listCtrl.saveimage()\">upload</button> -->\r\n  <input type=\"text\"id=\"url-upload\" placeholder=\"enter url of image\" ng-model=\"listCtrl.imgUrl\">\r\n  <button type=\"button\" name=\"add\" class=\"btn\" ng-click=\"listCtrl.addNewArticle()\">add</button>\r\n</form>\r\n"
+	module.exports = "<ul class=\"listOfArticles\">\r\n  <li ng-repeat=\"item in listCtrl.listOfArticles\">\r\n      <a href=\"#\" ui-sref=\"article({id:item.$id})\">\r\n        <img ng-src=\"{{item.img}}\" alt=\"item\" class=\"thumb\">\r\n        <h4>\r\n           {{item.name}}\r\n        </h4>\r\n      </a>\r\n  </li>\r\n</ul>\r\n\r\n<div class=\"newItem-wrap\">\r\n  <button class=\"btn\" ng-click=\"isReplyFormOpen = !isReplyFormOpen\">add new article</button>\r\n  <form class=\"newArticleForm\" ng-init=\"isReplyFormOpen = false\" ng-show=\"isReplyFormOpen\" id=\"replyForm\" >\r\n    <input type=\"text\" ng-model=\"listCtrl.newName\" placeholder=\"enter name\">\r\n    <textarea class=\"article-desc\" placeholder=\"enter description\" ng-model=\"listCtrl.desc\"> </textarea>\r\n\r\n    <!-- <input type=\"file\" name=\"pic\" id=\"image-upload\"> -->\r\n    <!-- <button type=\"button\" name=\"button\" ng-click=\"listCtrl.saveimage()\">upload</button> -->\r\n    <input type=\"text\"id=\"url-upload\" placeholder=\"enter url of image\" ng-model=\"listCtrl.imgUrl\">\r\n      <button type=\"button\" name=\"add\" class=\"btn\" ng-click=\"listCtrl.addNewArticle()\">add</button>\r\n\r\n  </div>\r\n</form>\r\n"
 
 /***/ },
 /* 15 */
@@ -36510,26 +36510,6 @@
 	function ListDirectiveController(Model, $firebaseArray, $firebaseObject) {
 	  var firebaseRef = new Firebase("https://cyber-pedia.firebaseio.com");
 	  this.listOfArticles = $firebaseArray(firebaseRef);
-
-	  // var refImg = new Firebase("https://cyber-pedia.firebaseio.com/images/");
-	  // var ImgObj = $firebaseObject(refImg);
-	  //
-	  // function saveimage(e1) {
-	  //    var filename = e1.target.files[0];
-	  //    var fr = new FileReader();
-	  //    fr.onload = function (res) {
-	  //        this.image = res.target.result;
-	  //        ImgObj.image = res.target.result;
-	  //        ImgObj.$save();
-	  //    };
-	  //
-	  //    fr.readAsDataURL(filename);
-	  //     console.log(filename);
-	  //  }
-	  //
-	  // document.getElementById("image-upload").addEventListener('change', saveimage, false);
-
-	  // console.log(Img);
 
 	  this.addNewArticle = function () {
 	    var ar = {
@@ -36617,7 +36597,7 @@
 
 
 	// module
-	exports.push([module.id, ".listOfArticles {\n  list-style: none;\n  margin: 20px;\n}\n.newArticleForm * {\n  display: block;\n  margin: 10px;\n}\n.article-desc {\n  width: 170px;\n  height: 300px;\n}\n.toggler {\n  cursor: pointer;\n}\n.thumb {\n  width: 10%;\n  height: 10%;\n}\n", ""]);
+	exports.push([module.id, ".listOfArticles {\n  text-align: center;\n  list-style: none;\n  margin: 20px;\n}\n.newArticleForm * {\n  display: block;\n  margin: 10px;\n}\n.article-desc {\n  width: 170px;\n  height: 300px;\n}\n.toggler {\n  cursor: pointer;\n}\n.thumb {\n  width: 7%;\n  height: 7%;\n}\n.newItem-wrap {\n  display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */\n  display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */\n  display: -ms-flexbox; /* TWEENER - IE 10 */\n  display: -webkit-flex;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n", ""]);
 
 	// exports
 

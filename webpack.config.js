@@ -21,7 +21,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: "style-loader!css-loader"
+        loader: "style-loader!css-loader!"
       },
       {
         test: /\.styl$/,
@@ -37,6 +37,9 @@ module.exports = {
       }
 
     ]
+  },
+  postcss: function () {
+          return [autoprefixer];
   },
   plugins: [
       new webpack.OldWatchingPlugin()
