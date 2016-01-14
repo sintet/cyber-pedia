@@ -1,7 +1,10 @@
-import angular from 'angular';
+import list from './list/list.js';
+import article from './article/article.js';
+import toggler from './toggler.js';
 
-import enemies from './enemies/enemies.js';
 
 export default angular.module('components', [
-  enemies.name,
+  list.name,
+  article.name,
+  toggler.name
 ]);
