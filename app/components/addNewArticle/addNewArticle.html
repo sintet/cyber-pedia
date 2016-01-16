@@ -1,0 +1,13 @@
+<div class="newItem-wrap">
+  <button class="btn" ng-click="isReplyFormOpen = !isReplyFormOpen">add new article</button>
+  <form class="newArticleForm" ng-init="isReplyFormOpen = false" ng-show="isReplyFormOpen" id="replyForm" >
+    <input type="text" ng-model="listCtrl.newName" placeholder="enter name">
+    <textarea class="article-desc" placeholder="enter description" ng-model="listCtrl.desc"> </textarea>
+
+    <!-- <input type="file" name="pic" id="image-upload"> -->
+    <!-- <button type="button" name="button" ng-click="listCtrl.saveimage()">upload</button> -->
+    <input type="text"id="url-upload" placeholder="enter url of image" ng-model="listCtrl.imgUrl">
+    <button type="button" name="add" class="btn" ng-click="listCtrl.addNewArticle()">add</button>
+
+  </form>
+</div>

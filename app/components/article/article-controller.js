@@ -1,10 +1,11 @@
-export default function articleDirectiveController(Model, $state) {
+export default function addNewArticleDirectiveController(Model, $state,$firebaseArray) {
   this.listOfArticles = Model.getListOfArticles();
   this.state = $state;
-  this.article = Model.getArticleById(this.state.params.id);
-  console.log(this.article);
+  this.article = {};
+
+  this.listOfArticles.$loaded().then(
+      (list) => this.article =  Model.getArticleById(this.state.params.id)
+  );
 
 }
-
-
-articleDirectiveController.$inject = ["Model","$state"];
+addNewArticleDirectiveController.$inject = ["Model","$state", "$firebaseArray"];

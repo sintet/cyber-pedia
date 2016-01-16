@@ -1,7 +1,7 @@
 export default function ListDirectiveController(Model, $firebaseArray, $firebaseObject) {
   let firebaseRef =  new Firebase("https://cyber-pedia.firebaseio.com");
   this.listOfArticles = $firebaseArray(firebaseRef);
-
+  // todo empty ar
   this.addNewArticle = function() {
       let ar = {
         name: this.newName,

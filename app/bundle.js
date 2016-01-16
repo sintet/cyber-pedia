@@ -111,7 +111,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n}\nhtml,\nbody {\n  height: 100%;\n}\n.hidden {\n  display: none;\n}\n", ""]);
+	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\nhtml,\nbody {\n  height: 100%;\n}\n.hidden {\n  display: none;\n}\n", ""]);
 
 	// exports
 
@@ -36411,17 +36411,17 @@
 
 	var _list2 = _interopRequireDefault(_list);
 
-	var _article = __webpack_require__(19);
+	var _article = __webpack_require__(22);
 
 	var _article2 = _interopRequireDefault(_article);
 
-	var _toggler = __webpack_require__(25);
+	var _addNewArticle = __webpack_require__(28);
 
-	var _toggler2 = _interopRequireDefault(_toggler);
+	var _addNewArticle2 = _interopRequireDefault(_addNewArticle);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = angular.module('components', [_list2.default.name, _article2.default.name, _toggler2.default.name]);
+	exports.default = angular.module('components', [_list2.default.name, _article2.default.name, _addNewArticle2.default.name]);
 
 /***/ },
 /* 12 */
@@ -36441,11 +36441,15 @@
 
 	var _listDirective2 = _interopRequireDefault(_listDirective);
 
-	var _model = __webpack_require__(16);
+	var _addNewArticleDirective = __webpack_require__(16);
+
+	var _addNewArticleDirective2 = _interopRequireDefault(_addNewArticleDirective);
+
+	var _model = __webpack_require__(19);
 
 	var _model2 = _interopRequireDefault(_model);
 
-	__webpack_require__(17);
+	__webpack_require__(20);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36454,7 +36458,7 @@
 	    url: '/list',
 	    template: '<list></list>'
 	  });
-	}).factory('Model', _model2.default).directive('list', _listDirective2.default);
+	}).factory('Model', _model2.default).directive('list', _listDirective2.default).directive('addNewArticle', _addNewArticleDirective2.default);
 
 /***/ },
 /* 13 */
@@ -36495,7 +36499,7 @@
 /* 14 */
 /***/ function(module, exports) {
 
-	module.exports = "<ul class=\"listOfArticles\">\r\n  <li ng-repeat=\"item in listCtrl.listOfArticles\">\r\n      <a href=\"#\" ui-sref=\"article({id:item.$id})\">\r\n        <img ng-src=\"{{item.img}}\" alt=\"item\" class=\"thumb\">\r\n        <h4>\r\n           {{item.name}}\r\n        </h4>\r\n      </a>\r\n  </li>\r\n</ul>\r\n\r\n<div class=\"newItem-wrap\">\r\n  <button class=\"btn\" ng-click=\"isReplyFormOpen = !isReplyFormOpen\">add new article</button>\r\n  <form class=\"newArticleForm\" ng-init=\"isReplyFormOpen = false\" ng-show=\"isReplyFormOpen\" id=\"replyForm\" >\r\n    <input type=\"text\" ng-model=\"listCtrl.newName\" placeholder=\"enter name\">\r\n    <textarea class=\"article-desc\" placeholder=\"enter description\" ng-model=\"listCtrl.desc\"> </textarea>\r\n\r\n    <!-- <input type=\"file\" name=\"pic\" id=\"image-upload\"> -->\r\n    <!-- <button type=\"button\" name=\"button\" ng-click=\"listCtrl.saveimage()\">upload</button> -->\r\n    <input type=\"text\"id=\"url-upload\" placeholder=\"enter url of image\" ng-model=\"listCtrl.imgUrl\">\r\n      <button type=\"button\" name=\"add\" class=\"btn\" ng-click=\"listCtrl.addNewArticle()\">add</button>\r\n\r\n  </div>\r\n</form>\r\n"
+	module.exports = "<div class=\"flex\">\r\n\r\n  <ul class=\"listOfArticles\">\r\n    <li ng-repeat=\"item in listCtrl.listOfArticles\" class=\"article-card\">\r\n        <a href=\"#\" ui-sref=\"article({id:item.$id})\" class=\"article-link\">\r\n          <img ng-src=\"{{item.img}}\" alt=\"item\" class=\"thumb\">\r\n          <h4>\r\n             {{item.name}}\r\n          </h4>\r\n        </a>\r\n    </li>\r\n  </ul>\r\n  <add-new-article></add-new-article>\r\n</div>\r\n"
 
 /***/ },
 /* 15 */
@@ -36510,7 +36514,7 @@
 	function ListDirectiveController(Model, $firebaseArray, $firebaseObject) {
 	  var firebaseRef = new Firebase("https://cyber-pedia.firebaseio.com");
 	  this.listOfArticles = $firebaseArray(firebaseRef);
-
+	  // todo empty ar
 	  this.addNewArticle = function () {
 	    var ar = {
 	      name: this.newName,
@@ -36528,6 +36532,60 @@
 
 /***/ },
 /* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = AddNewArticleDirective;
+
+	var _addNewArticle = __webpack_require__(17);
+
+	var _addNewArticle2 = _interopRequireDefault(_addNewArticle);
+
+	var _addNewArticleController = __webpack_require__(18);
+
+	var _addNewArticleController2 = _interopRequireDefault(_addNewArticleController);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// import ChatService from './chat-service.js';
+
+	function AddNewArticleDirective() {
+
+	    return {
+	        template: _addNewArticle2.default,
+	        restrict: 'E',
+	        scope: {},
+	        controller: _addNewArticleController2.default,
+	        controllerAs: 'addNewArticleCtrl',
+	        bindToController: true
+	    };
+	}
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"newItem-wrap\">\r\n  <button class=\"btn\" ng-click=\"isReplyFormOpen = !isReplyFormOpen\">add new article</button>\r\n  <form class=\"newArticleForm\" ng-init=\"isReplyFormOpen = false\" ng-show=\"isReplyFormOpen\" id=\"replyForm\" >\r\n    <input type=\"text\" ng-model=\"listCtrl.newName\" placeholder=\"enter name\">\r\n    <textarea class=\"article-desc\" placeholder=\"enter description\" ng-model=\"listCtrl.desc\"> </textarea>\r\n\r\n    <!-- <input type=\"file\" name=\"pic\" id=\"image-upload\"> -->\r\n    <!-- <button type=\"button\" name=\"button\" ng-click=\"listCtrl.saveimage()\">upload</button> -->\r\n    <input type=\"text\"id=\"url-upload\" placeholder=\"enter url of image\" ng-model=\"listCtrl.imgUrl\">\r\n    <button type=\"button\" name=\"add\" class=\"btn\" ng-click=\"listCtrl.addNewArticle()\">add</button>\r\n\r\n  </form>\r\n</div>\r\n"
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = addNewArticleDirectiveController;
+	function addNewArticleDirectiveController(Model, $state, $firebaseArray) {}
+	addNewArticleDirectiveController.$inject = ["Model", "$state", "$firebaseArray"];
+
+/***/ },
+/* 19 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -36545,9 +36603,7 @@
 	      return listOfArticles;
 	    },
 	    getArticleById: function getArticleById(id) {
-	      return listOfArticles.find(function (article) {
-	        return article.$id === id;
-	      });
+	      return listOfArticles.$getRecord(id);
 	    },
 	    addArticle: function addArticle(article) {
 	      console.log(article);
@@ -36563,13 +36619,13 @@
 	Model.$inject = ["$firebaseArray"];
 
 /***/ },
-/* 17 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(18);
+	var content = __webpack_require__(21);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(4)(content, {});
@@ -36589,7 +36645,7 @@
 	}
 
 /***/ },
-/* 18 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
@@ -36597,13 +36653,13 @@
 
 
 	// module
-	exports.push([module.id, ".listOfArticles {\n  text-align: center;\n  list-style: none;\n  margin: 20px;\n}\n.newArticleForm * {\n  display: block;\n  margin: 10px;\n}\n.article-desc {\n  width: 170px;\n  height: 300px;\n}\n.toggler {\n  cursor: pointer;\n}\n.thumb {\n  width: 7%;\n  height: 7%;\n}\n.newItem-wrap {\n  display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */\n  display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */\n  display: -ms-flexbox; /* TWEENER - IE 10 */\n  display: -webkit-flex;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n", ""]);
+	exports.push([module.id, ".listOfArticles {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  list-style: none;\n  margin-bottom: 20px;\n}\n.article-card {\n  width: 210px;\n  padding: 5px;\n  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.12);\n  margin: 5px;\n  text-align: center;\n}\n.article-link {\n  text-transform: capitalize;\n  text-decoration: none;\n  color: #3f51b5;\n}\n.article-desc {\n  width: 170px;\n  height: 300px;\n}\n.thumb {\n  width: 200px;\n/*height: 7%;*/\n}\n@media screen and (min-device-width: 320px) and (max-device-width: 600px) {\n  .article-card {\n    width: 100%;\n    max-width: 507px;\n  }\n  .thumb {\n    width: auto;\n  }\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 19 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36616,15 +36672,15 @@
 
 	var _angularUiRouter2 = _interopRequireDefault(_angularUiRouter);
 
-	var _articleDirective = __webpack_require__(20);
+	var _articleDirective = __webpack_require__(23);
 
 	var _articleDirective2 = _interopRequireDefault(_articleDirective);
 
-	var _model = __webpack_require__(16);
+	var _model = __webpack_require__(19);
 
 	var _model2 = _interopRequireDefault(_model);
 
-	__webpack_require__(23);
+	__webpack_require__(26);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36636,7 +36692,7 @@
 	}).factory('Model', _model2.default).directive('article', _articleDirective2.default);
 
 /***/ },
-/* 20 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36646,11 +36702,11 @@
 	});
 	exports.default = ArticleDirective;
 
-	var _article = __webpack_require__(21);
+	var _article = __webpack_require__(24);
 
 	var _article2 = _interopRequireDefault(_article);
 
-	var _articleController = __webpack_require__(22);
+	var _articleController = __webpack_require__(25);
 
 	var _articleController2 = _interopRequireDefault(_articleController);
 
@@ -36671,13 +36727,13 @@
 	}
 
 /***/ },
-/* 21 */
+/* 24 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"main-wrap\">\r\n\r\n  <img ng-src=\"{{articleCtrl.article.img}}\" alt=\"name\" class=\"article-image\">\r\n  <div class=\"desc\">\r\n    <h2 class=\"item-title\">{{articleCtrl.article.name}}</h2>\r\n    <h4 class=\"item-type\">Type</h4>\r\n    <p class=\"desc-body\" >{{articleCtrl.article.desc}} </p>\r\n  </div>\r\n\r\n</div>\r\n<div class=\"btns\">\r\n  <button type=\"button\" name=\"back\" class=\"btn\" ui-sref='list'>back</button>\r\n  <button type=\"button\" name=\"edit\" class=\"btn\">edit</button>\r\n</div>\r\n"
 
 /***/ },
-/* 22 */
+/* 25 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -36685,24 +36741,28 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = articleDirectiveController;
-	function articleDirectiveController(Model, $state) {
+	exports.default = addNewArticleDirectiveController;
+	function addNewArticleDirectiveController(Model, $state, $firebaseArray) {
+	  var _this = this;
+
 	  this.listOfArticles = Model.getListOfArticles();
 	  this.state = $state;
-	  this.article = Model.getArticleById(this.state.params.id);
-	  console.log(this.article);
-	}
+	  this.article = {};
 
-	articleDirectiveController.$inject = ["Model", "$state"];
+	  this.listOfArticles.$loaded().then(function (list) {
+	    return _this.article = Model.getArticleById(_this.state.params.id);
+	  });
+	}
+	addNewArticleDirectiveController.$inject = ["Model", "$state", "$firebaseArray"];
 
 /***/ },
-/* 23 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(24);
+	var content = __webpack_require__(27);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(4)(content, {});
@@ -36722,7 +36782,7 @@
 	}
 
 /***/ },
-/* 24 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
@@ -36730,37 +36790,74 @@
 
 
 	// module
-	exports.push([module.id, ".main-wrap {\n  display: flex;\n}\n.desc {\n  width: 800px;\n  margin-left: 30px;\n}\n.article-image {\n  width: 25%;\n  height: 25%;\n}\n.item-title {\n  margin-top: 30px;\n  text-align: center;\n}\n.item-type {\n  text-align: center;\n}\n.desc-body {\n  margin-top: 10px;\n  font-size: 18px;\n}\n.btn {\n  padding: 0 20px;\n  text-transform: uppercase;\n}\n", ""]);
+	exports.push([module.id, ".main-wrap {\n  display: flex;\n}\n.desc {\n  width: 800px;\n  margin-left: 30px;\n}\n.item-title {\n  margin-top: 30px;\n  text-align: center;\n}\n.item-type {\n  text-align: center;\n}\n.desc-body {\n  margin-top: 10px;\n  font-size: 18px;\n}\n.btn {\n  padding: 0 20px;\n  text-transform: uppercase;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 25 */
-/***/ function(module, exports) {
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = angular.module('toggler', []).directive('toggler', function () {
-	  return {
-	    template: '<a class="toggler" ng-click="isReplyFormOpen = !isReplyFormOpen">add new article</a>',
-	    restrict: 'E',
-	    scope: {},
-	    controller: TogglerDirectiveController,
-	    controllerAs: 'togglerCtrl',
-	    bindToController: true
-	  };
-	});
 
-	function TogglerDirectiveController() {
-	  this.clicked = true;
-	  this.toggler = function () {
-	    this.clicked = this.clicked === false ? true : false;
-	  };
+	var _addNewArticleDirective = __webpack_require__(16);
+
+	var _addNewArticleDirective2 = _interopRequireDefault(_addNewArticleDirective);
+
+	var _model = __webpack_require__(19);
+
+	var _model2 = _interopRequireDefault(_model);
+
+	__webpack_require__(29);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = angular.module('addNewArticle', []).factory('Model', _model2.default).directive('addNewArticleDirective', _addNewArticleDirective2.default); // import uiRouter from 'angular-ui-router';
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(30);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(4)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/stylus-loader/index.js!./addNewArticle.styl", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/stylus-loader/index.js!./addNewArticle.styl");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
 	}
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(3)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".newItem-wrap {\n  display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */\n  display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */\n  display: -ms-flexbox; /* TWEENER - IE 10 */\n  display: -webkit-flex;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n.newArticleForm * {\n  display: block;\n  margin: 10px;\n}\n", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);

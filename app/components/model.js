@@ -3,11 +3,11 @@ export default function Model ($firebaseArray){
   let listOfArticles = $firebaseArray(firebaseRef);
 
   return {
-    getListOfArticles(){
+    getListOfArticles() {
       return  listOfArticles ;
     },
     getArticleById (id){
-      return listOfArticles.find( (article) => article.$id===id);
+      return listOfArticles.$getRecord(id);
     },
     addArticle(article){
       console.log(article);

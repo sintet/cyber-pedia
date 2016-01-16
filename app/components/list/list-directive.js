@@ -12,5 +12,6 @@ export default function ArticleDirective() {
       controller : ListDirectiveController,
       controllerAs : 'listCtrl',
       bindToController : true,
+      // link: linkFun
   };
 }

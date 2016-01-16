@@ -1,30 +1,41 @@
 .listOfArticles{
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   list-style: none;
-  margin: 20px;
+  margin-bottom: 20px;
+
 }
-.newArticleForm *{
-  display: block;
-  margin: 10px;
+.article-card{
+  width: 210px;
+  padding: 5px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+  margin: 5px;
+  text-align: center;
+
+}
+.article-link{
+  text-transform: capitalize;
+  text-decoration: none;
+  color: #3f51b5;
 }
 .article-desc{
     width: 170px;
     height: 300px;
 }
-.toggler{
-  cursor: pointer;
-}
-.thumb{
-  width: 7%;
-  height: 7%;
-}
-.newItem-wrap{
-  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
-  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
-  display: -ms-flexbox;      /* TWEENER - IE 10 */
-  display: -webkit-flex;
-  display: flex;
 
-  flex-direction: column;
-  align-items: center;
+.thumb{
+  width: 200px;
+  /*height: 7%;*/
+}
+@media screen and  (min-device-width: 320px) and (max-device-width:600px) and  (min-width: 320px) and (max-width:600px){
+  .article-card{
+    width: 100%;
+    max-width: 507px;
+  }
+  .thumb{
+    width: auto;
+  }
+
+
 }

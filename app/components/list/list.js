@@ -1,5 +1,6 @@
 import uiRouter from 'angular-ui-router';
 import listDirective from './list-directive.js';
+import addNewArticle from '../addNewArticle/addNewArticle-directive.js';
 import Model from '../model.js';
 import './list.styl';
 
@@ -14,4 +15,5 @@ export default angular.module('list', [
     });
 })
 .factory('Model', Model)
-.directive('list', listDirective);
+.directive('list', listDirective)
+.directive('addNewArticle',addNewArticle);
